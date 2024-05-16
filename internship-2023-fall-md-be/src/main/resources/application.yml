@@ -1,0 +1,59 @@
+spring:
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/internship23"
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 10000
+      validation-timeout: 10000
+      idle-timeout: 10000
+      leak-detection-threshold: 10000
+      max-lifetime: 3600000
+      max-pool-size: 3
+      min-idle: 1000
+      is-auto-commit: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          public-key-location: 'file:config/jwk-public.pem'
+          private-key-location: 'file:config/jwk-private.pem'
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        use_sql_comments: true
+        format_sql: true
+    open-in-view: false
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog/db.changelog-master.xml
+  jackson:
+    default-property-inclusion: non_absent
+    serialization:
+      write-dates-as-timestamps: false
+
+server.port: 8081
+server:
+  servlet:
+    contextPath: /core
+
+ro:
+  axon:
+    dot:
+      roles:
+        - USER
+        - HR
+        - TEAM_LEAD
+      security:
+        jwt:
+          keyId: '4aHAI-FfNDCorwDf9gy_2ptEhMdYyqmIPOdDzFqHn_s'
+          audience: "axon-dot"
+          issuer: "axon-dot"
+          accessType: "access"
+          refreshType: "refresh"
+          accessDuration: 300 #seconds
+          refreshDuration: 1800 #seconds
